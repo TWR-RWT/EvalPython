@@ -1,0 +1,25 @@
+CREATE TABLE immo.contrats_loc
+(
+    id_contrat serial primary key,
+    id_location int NOT NULL,
+    id_locataire int NOT NULL,
+    agence varchar(50) NOT NULL,
+    frais_agence int NOT NULL,
+    date_debut date NOT NULL,
+
+    depot_garantie decimal(10,2) NOT NULL,
+    depot_garantie_payé decimal(10,2) NOT NULL,
+
+    loyer_histo text[][] NOT NULL,
+    loyer_payé_histo text[][][] NOT NULL,
+
+    charges_histo text[][] NOT NULL,
+    charges_payé_histo text[][][] NOT NULL,
+
+    date_etat_des_lieux date,
+    montant_etat_des_lieux decimal(10,2),
+    date_fin date,
+    
+    FOREIGN key (id_locataire) REFERENCES immo.locataires(id_locataire),
+    FOREIGN key (id_location) REFERENCES immo.locations(id_location)
+);

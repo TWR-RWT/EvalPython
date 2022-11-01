@@ -1,0 +1,8 @@
+CREATE TABLE immo.locations
+(
+    id_location serial primary key,
+    adresse varchar(100) NOT NULL,
+    complement varchar(100) NOT NULL,
+    code_postal varchar(10) NOT NULL,
+    ville varchar(50) NOT NULL
+);

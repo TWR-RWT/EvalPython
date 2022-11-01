@@ -1,0 +1,11 @@
+CREATE TABLE immo.locataires
+(
+    id_locataire serial primary key,
+    nom varchar(50) NOT NULL,
+    prenom varchar(50) NOT NULL,
+    adresse varchar(100) NOT NULL,
+    code_postal varchar(10) NOT NULL,
+    ville varchar(50) NOT NULL,
+    telephone varchar(20) NOT NULL,
+    email varchar(50) NOT NULL
+);
