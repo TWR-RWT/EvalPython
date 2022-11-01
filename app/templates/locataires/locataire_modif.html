@@ -1,9 +1,9 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 {% block body %}
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card card-body">
-            <form action="/locataire/{{ locataire.id_locataire }}/modif" method="POST">
+            <form action="/locataires/locataire/{{ locataire.id_locataire }}/modif" method="POST">
                 <div class="form-group">
                     <input type="text" name="nom" value="{{locataire.nom}}" class="form-control">
                 </div>

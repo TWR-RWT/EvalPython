@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="card card-body">
+            <form action="/locations/location/{{ location.id_location }}/modif" method="POST">
+                <div class="form-group">
+                    <input type="text" name="adresse" value="{{location.adresse}}" class="form-control" >
+                </div>
+                <div class="form-group">
+                    <input type="text" name="complement" value="{{location.complement}}" class="form-control" >
+                </div>
+                <div class="form-group">
+                    <input type="int" name="CP" value="{{location.code_postal}}" class="form-control" >
+                </div>
+                <div class="form-group">
+                    <input type="text" name="ville" value="{{location.ville}}" class="form-control" >
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">
+                    Modifier
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
