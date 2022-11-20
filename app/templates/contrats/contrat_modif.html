@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12 offset-md-12">
+        <h3>Mise à jours du contrat</h3>
+        <div class="card card-body">
+            <form action="/contrats/contrat/{{ contrat.id_contrat }}/modif" method="POST">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="id_location">id location</label>
+                        <input type="int" class="form-control" name="id_location" value="{{ contrat.id_location }}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="id_locataire">id locataire</label>
+                        <input type="int" class="form-control" name="id_locataire" value="{{ contrat.id_locataire }}">
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="agence">Agence</label>
+                        <input type="text" class="form-control" name="agence" value="{{ contrat.agence }}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="frais_agence">Frais d'agence</label>
+                        <input type="number" step="0.01" class="form-control" name="frais_agence" value="{{ contrat.frais_agence }}">
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label for="depot_garantie">Depôt de garantie</label>
+                        <input type="number" step="0.01" class="form-control" name="depot_garantie" value="{{ contrat.depot_garantie }}">
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="loyer">Loyer</label>
+                        <input type="number" step="0.01" class="form-control" name="loyer" value="{{ contrat.loyer }}">
+                    </div> 
+                    <div class="col-sm-4">
+                        <label for="charges">Charges</label>
+                        <input type="number" step="0.01" class="form-control" name="charges" value="{{ contrat.charges }}">
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="date_debut">Date de début</label>
+                        <input type="date" class="form-control" name="date_debut" value="{{ contrat.date_debut }}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="date_fin">Date de fin</label>
+                        <input type="date" class="form-control" name="date_fin" value="{{ contrat.date_fin }}">
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="date_etat_des_lieux">Date de l'état des lieux</label>
+                        <input type="date" class="form-control" name="date_etat_des_lieux" value="{{ contrat.date_etat_des_lieux }}">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="montant_etat_des_lieux">Montant</label>
+                        <input type="number" step="0.01" class="form-control" name="montant_etat_des_lieux" value="{{ contrat.montant_etat_des_lieux }}">
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-primary btn-block">
+                        Sauvegarder les modification
+                        </button>
+                    </div>
+                </div>    
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

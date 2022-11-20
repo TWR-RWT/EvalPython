@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12 offset-md-12">
+        <h3>Nouveau paiement</h3>
+        <div class="card card-body">
+            <form action="{{url_for('paiement_ajout', id=contrat.id_contrat)}}" method="POST">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="id_contrat">id contrat</label>
+                        <input type="int" class="form-control" name="id_contrat" placeholder="id contrat" value={{contrat.id_contrat}}>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="date_paiement">Date de paiement</label>
+                        <input type="date" class="form-control" name="date_paiement" value="Date de paiement">
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="paiement_type">Type de paiement</label>
+                        <br>
+                        <select id="paiement_type" name ="paiement_type">
+                            <option value="Depot de garantie">Depot de garantie</option>
+                            <option value="Loyer" selected>Loyer</option>
+                            <option value="Charges">Charges</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="montant">Montant</label>
+                        <input type="number" step="0.01" class="form-control" name="montant" value="Montant">
+                    </div>
+                    
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <label for="complement">Complement</label>
+                        <br>
+                        <select id="complement" name ="complement">
+                            <option value="N/A">N/A</option>
+                            <option value="Direct" selected>Direct</option>
+                            <option value="APL">APL</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block">Sauvegarder le paiement</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

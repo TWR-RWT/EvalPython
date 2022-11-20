@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block body %}
+
+<div>
+    <h3>Deconnexion</h3>
+    <div>
+        <a href="/logout" class="btn btn-danger btn-delete btn-sm">Deconnexion</a>
+    </div>
+</div>
+<br>
+<div>
+    <h3>Creation de compte</h3>
+    {% with messages = get_flashed_messages()  %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form action="/create" method="POST">
+        <input type="username" name="username" placeholder="Username"> <br><br>
+        <input type="password" name="password" placeholder="Password"> <br><br>
+        <input type="submit" value="Créer">
+    </form>
+</div>
+
+{% endblock %}

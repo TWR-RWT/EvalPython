@@ -1,0 +1,10 @@
+CREATE TABLE immo.paiements
+(
+    id_paiement serial primary key,
+    id_contrat int NOT NULL,
+    date_paiement date NOT NULL,
+    paiement_type varchar(50) NOT NULL,
+    complement varchar(50),
+    montant decimal(10,2) NOT NULL,
+    FOREIGN key (id_contrat) REFERENCES immo.contrats_loc(id_contrat)
+);

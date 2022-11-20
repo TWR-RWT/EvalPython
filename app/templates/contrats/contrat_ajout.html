@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="row"><h3>Gestion des Contrats</h3></div>
+<div class="row" style="font-size:80%">
+    <div class="col-md-12">
+        {% with messages = get_flashed_messages()  %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="card card-body">
+            <form action="{{url_for('ajout_contrat')}}" method="POST">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="id_location">id location</label>
+                        <input type="int" class="form-control" name="id_location" placeholder="id_location">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="id_locataire">id locataire</label>
+                        <input type="int" class="form-control" name="id_locataire" placeholder="id_locataire">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="agence">Agence</label>
+                        <input type="text" class="form-control" name="agence" placeholder="agence">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="frais_agence">frais d'agence</label>
+                        <input type="int" class="form-control" name="frais_agence" placeholder="frais d'agence en %">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="date_debut">Date début du contrat</label>
+                        <input type="date" class="form-control" name="date_debut" placeholder="date de début"><!-- date début contrat et date du loyer initial-->
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="depot_garantie">Dépôt de garantie</label>
+                        <input type=number step=0.01 class="form-control" name="depot_garantie" placeholder="Montant du dépôt">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label for="loyer">Loyer</label>
+                        <input type="text" class="form-control" name="loyer" placeholder="loyer">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="charges">Charges</label>
+                        <input type="text" class="form-control" name="charges" placeholder="charges">
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-block">Nouveau contrat</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
