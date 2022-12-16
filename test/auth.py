@@ -55,24 +55,3 @@ def test_jwt(username, secret_key):
     token = jwt.encode({'user': username, 'exp': datetime.utcnow() + timedelta(hours=24)}, secret_key)
     decode = jwt.decode(token, secret_key, algorithms=['HS256'])
     return decode['user']
-
-def add(x, y):
-    """Add Function"""
-    return x + y
-
-
-def subtract(x, y):
-    """Subtract Function"""
-    return x - y
-
-
-def multiply(x, y):
-    """Multiply Function"""
-    return x * y
-
-
-def divide(x, y):
-    """Divide Function"""
-    if y == 0:
-        raise ValueError('Can not divide by zero!')
-    return x / y
