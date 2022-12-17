@@ -25,7 +25,7 @@ app = Flask(__name__)
 
 app.secret_key = "very-secret-key"
 
-DB_HOST = "dpg-ceevc3h4reb3r0p0mlng-a" #get_env_variable("POSTGRES_DB_HOST")
+DB_HOST = "dpg-ceevc3h4reb3r0p0mlng-a.frankfurt-postgres.render.com" #get_env_variable("POSTGRES_DB_HOST")
 DB_NAME = "mydb_3gut" #get_env_variable("POSTGRES_DB_NAME")
 DB_USER = "postgres_user" #get_env_variable("POSTGRES_DB_USER")
 DB_PASS = "iKXtSSMu6hxGBDyNyA0BGuJQpnAftFK4" #get_env_variable("POSTGRES_DB_PASS")
