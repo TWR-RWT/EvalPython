@@ -6,7 +6,6 @@ import psycopg2.extras
 import json
 import sys
 from urllib import parse
-import pandas as pd
 import jwt
 from dotenv import load_dotenv
 import os
