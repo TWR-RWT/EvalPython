@@ -1,5 +1,5 @@
 #! C:\Users\tgp\AppData\Local\Programs\Python\Python310\python.exe
-from app import app, conn, request, render_template, flash, redirect, url_for, psycopg2, pd
+from app import app, conn, request, render_template, flash, redirect, url_for, psycopg2
 from functools import wraps
 from flask import jsonify, session
 import jwt
