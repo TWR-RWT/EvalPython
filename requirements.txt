@@ -6,4 +6,4 @@ PyJWT==2.6.0
 python-dotenv==0.21.0
 Werkzeug==2.2.2
 gunicorn==20.1.0
-wkhtmltopdf-pack-ng==0.12.3.0
+wkhtmltopdf-pack==0.12.2.4
