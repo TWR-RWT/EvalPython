@@ -10,6 +10,11 @@ import jwt
 from dotenv import load_dotenv
 import os
 
+#if 'DYNO' in os.environ:
+#    print ('loading wkhtmltopdf path on heroku')
+#    MYDIR = os.path.dirname(__file__)    
+#    WKHTMLTOPDF_CMD = os.path.join(MYDIR + "/vendor/wkhtmltox/lib/", "libwkhtmltox.so")
+
 # loads the environment variable file
 load_dotenv()
 
