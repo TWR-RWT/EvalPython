@@ -4,7 +4,7 @@ import sys
 from flask import Response, Flask, render_template, make_response
 from datetime import datetime
 import pdfkit
-config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+#config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
 from functools import wraps
 from flask import jsonify, session
 import jwt
