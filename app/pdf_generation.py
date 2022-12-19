@@ -36,7 +36,7 @@ def pdf(idcontrat):
     cur.close()#
     #conn.close()#
     rendered = render_template('pdf/facture.html', paiements = data, id_contrat = idcontrat)
-    pdf= pdfkit.from_string(rendered, False, configuration=config)
+    pdf= pdfkit.from_string(rendered, False) #, configuration=config
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
@@ -53,7 +53,7 @@ def pdf_cloturation(idcontrat):
     cur.close()#
     #conn.close()#
     rendered = render_template('pdf/facture_finale.html', paiements = data, id_contrat = idcontrat)
-    pdf= pdfkit.from_string(rendered, False, configuration=config)
+    pdf= pdfkit.from_string(rendered, False)#, configuration=config
     response = make_response(pdf)
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
@@ -95,7 +95,7 @@ def quittance(id):
             message_quittance = "la date demandée pour la quittance est antérieur à la date de début du contrat"
 
         rendered = render_template('pdf/quittance.html', paiements = data, id_contrat = id, date_quittance = date_quittance, message_quittance = message_quittance)
-        pdf= pdfkit.from_string(rendered, False, configuration=config)
+        pdf= pdfkit.from_string(rendered, False)#, configuration=config
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
