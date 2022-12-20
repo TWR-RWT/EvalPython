@@ -1,5 +1,5 @@
 #! C:\Users\tgp\AppData\Local\Programs\Python\Python310\python.exe
-from app import app, conn, request, render_template, flash, redirect, url_for, psycopg2
+from app import app, DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT, request, render_template, flash, redirect, url_for, psycopg2
 from functools import wraps
 from flask import jsonify, session
 import jwt
@@ -22,18 +22,20 @@ def token_required_location(func):
 @app.route("/locations")
 @token_required_location
 def locations():
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     s = "SELECT * FROM immo.locations"
     cur.execute(s) # Execute the SQL
     list_locations = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('locations/index.html', list_locations=list_locations)
 
 @app.route("/locations/ajout_location", methods = ['POST'])
 @token_required_location
 def ajout_location():
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         adresse = request.form['adresse']
@@ -43,24 +45,26 @@ def ajout_location():
         cur.execute("INSERT INTO immo.locations (adresse, complement, code_postal, ville) VALUES(%s, %s, %s, %s)", (adresse, complement, code_postal, ville))
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Location ajouté avec succès')
         return redirect(url_for('locations'))
 
 @app.route("/locations/location/<id>", methods=['POST', 'GET'])
 @token_required_location
 def location_modif(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute('SELECT * FROM immo.locations WHERE id_location = %s', (id))
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('locations/location_modif.html', location = data[0])
 
 @app.route("/locations/location/<id>/modif", methods=['POST'])
 @token_required_location
 def location_modif_post(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         adresse = request.form['adresse']
@@ -74,17 +78,18 @@ def location_modif_post(id):
         """, (adresse, complement, code_postal, ville, id))
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Bien modifié avec succès')
         return redirect(url_for('locations'))
 
 @app.route("/locations/location/<string:id>/suppr", methods=['POST', 'GET'])
 @token_required_location
 def location_suppr(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute('DELETE FROM immo.locations WHERE id_location = {0}'.format(id))
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     flash('Bien supprimé avec succès')
     return redirect(url_for('locations'))

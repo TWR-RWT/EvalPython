@@ -1,5 +1,5 @@
 #! C:\Users\tgp\AppData\Local\Programs\Python\Python310\python.exe
-from app import app, conn, request, render_template, flash, redirect, url_for, psycopg2
+from app import app, DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT, request, render_template, flash, redirect, url_for, psycopg2
 import sys
 from flask import Response, Flask, render_template, make_response
 from datetime import datetime
@@ -28,13 +28,14 @@ def token_required_pdf(func):
 @app.route("/<idcontrat>/pdf")
 @token_required_pdf
 def pdf(idcontrat):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     s= open("app/sql/paiements.sql").read()
     cur.execute(s.format(idcontrat))
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     rendered = render_template('pdf/facture.html', paiements = data, id_contrat = idcontrat)
     pdf= pdfkit.from_string(rendered, False) #, configuration=config
     response = make_response(pdf)
@@ -45,13 +46,14 @@ def pdf(idcontrat):
 @app.route("/<idcontrat>/pdf_cloture")
 @token_required_pdf
 def pdf_cloturation(idcontrat):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     s= open("app/sql/paiements.sql").read()
     cur.execute(s.format(idcontrat))
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     rendered = render_template('pdf/facture_finale.html', paiements = data, id_contrat = idcontrat)
     pdf= pdfkit.from_string(rendered, False)#, configuration=config
     response = make_response(pdf)
@@ -62,6 +64,7 @@ def pdf_cloturation(idcontrat):
 @app.route("/contrats/contrat/<string:id>/quittance", methods=['POST'])
 @token_required_pdf
 def quittance(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         date_quittance = request.form['date_quittance']
@@ -70,7 +73,7 @@ def quittance(id):
         data = cur.fetchall()
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
 
         date_cible = datetime.strptime(date_quittance, '%Y-%m-%d').date()
 
@@ -95,7 +98,7 @@ def quittance(id):
             message_quittance = "la date demandée pour la quittance est antérieur à la date de début du contrat"
 
         rendered = render_template('pdf/quittance.html', paiements = data, id_contrat = id, date_quittance = date_quittance, message_quittance = message_quittance)
-        pdf= pdfkit.from_string(rendered, False)#, configuration=config
+        pdf= pdfkit.from_string(rendered, False) #, configuration=config
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = 'inline; filename=output.pdf'

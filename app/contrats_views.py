@@ -1,5 +1,5 @@
 #! C:\Users\tgp\AppData\Local\Programs\Python\Python310\python.exe
-from app import app, conn, request, render_template, flash, redirect, url_for, psycopg2
+from app import app, DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT, request, render_template, flash, redirect, url_for, psycopg2
 import sys
 from flask import Response
 from functools import wraps
@@ -25,6 +25,7 @@ def token_required_contr(func):
 @app.route("/contrats")
 @token_required_contr
 def contrats():
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #s = "SELECT * FROM immo.contrats_loc"
     s= open("app/sql/list_contratspaiements.sql").read()
@@ -32,7 +33,7 @@ def contrats():
     list_contrats = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('contrats/index.html', list_contrats=list_contrats)
 
 
@@ -47,6 +48,7 @@ def page_ajout_contrat():
 @app.route("/contrats/ajout_contrat", methods = ['POST'])
 @token_required_contr
 def ajout_contrat():
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         id_location = request.form['id_location']
@@ -68,18 +70,19 @@ def ajout_contrat():
         date_debut, depot_garantie, loyer, charges))
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Contrat ajouté avec succès')
         return redirect(url_for('contrats'))
 
 @app.route("/contrats/contrat/<string:id>/suppr", methods=['POST', 'GET'])
 @token_required_contr
 def contrat_suppr(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute('DELETE FROM immo.contrats_loc WHERE id_contrat = {0}'.format(id))
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     flash('Contrat supprimé avec succès')
     return redirect(url_for('contrats'))
 
@@ -90,6 +93,7 @@ def contrat_suppr(id):
 @app.route("/contrats/contrat/<string:id>", methods=['POST', 'GET'])
 @token_required_contr
 def contrat_modif(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute("""
             SELECT * FROM immo.contrats_loc
@@ -98,12 +102,13 @@ def contrat_modif(id):
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('contrats/contrat_modif.html', contrat = data[0])
 
 @app.route("/contrats/contrat/<string:id>/modif", methods=['POST'])
 @token_required_contr
 def contrat_modif_post(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         id_location = request.form['id_location']
@@ -153,7 +158,7 @@ def contrat_modif_post(id):
         
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Contrat modifié avec succès')
         return redirect(url_for('contrats'))
     
@@ -164,19 +169,20 @@ def contrat_modif_post(id):
 @app.route("/contrats/contrat/<string:id>/paiements")
 @token_required_contr
 def page_paiements(id):
-
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     s= open("app/sql/paiements.sql").read()
     cur.execute(s.format(id))
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('contrats/paiements.html', paiements = data, id_contrat = id)
 
 @app.route("/contrats/contrat/page_ajout_paiement/<id>", methods = ['POST', 'GET'])
 @token_required_contr
 def page_ajout_paiement(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute("""
             SELECT * FROM immo.contrats_loc
@@ -185,7 +191,7 @@ def page_ajout_paiement(id):
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('/contrats/paiement_ajout.html', contrat = data[0])
 
 
@@ -195,6 +201,7 @@ def page_ajout_paiement(id):
 @app.route("/contrats/contrat/<string:id>/paiement_ajout", methods=['POST'])
 @token_required_contr
 def paiement_ajout(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         id_contrat = request.form['id_contrat']
@@ -207,7 +214,7 @@ def paiement_ajout(id):
         (id_contrat, date_paiement, montant, paiement_type, complement))
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Paiement ajouté avec succès')
         return redirect(url_for('page_paiements', id = id))
 
@@ -221,6 +228,7 @@ def paiement_ajout(id):
 @app.route("/paiement/<id>/paiement_modif", methods=['POST', 'GET'])
 @token_required_contr
 def paiement_modif(id):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute("""
             SELECT * FROM immo.paiements
@@ -229,12 +237,13 @@ def paiement_modif(id):
     data = cur.fetchall()
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     return render_template('contrats/paiement_modif.html', paiement = data[0])
 
 @app.route("/contrat/<idcontrat>/paiement/<idpaiement>/suppr", methods=['POST', 'GET'])
 @token_required_contr
 def paiement_supprimer(idcontrat, idpaiement):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute("""
             DELETE FROM immo.paiements
@@ -242,13 +251,14 @@ def paiement_supprimer(idcontrat, idpaiement):
         """, (idpaiement))
     conn.commit()
     cur.close()#
-    #conn.close()#
+    conn.close()#
     flash('Paiement supprimé avec succès')
     return redirect(url_for('page_paiements', id = idcontrat))
 
 @app.route("/contrat/<idcontrat>/paiement/<idpaiement>/modif", methods=['POST'])
 @token_required_contr
 def paiement_modif_post(idcontrat, idpaiement):
+    conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     if request.method == 'POST':
         date_paiement = request.form['date_paiement']
@@ -265,6 +275,6 @@ def paiement_modif_post(idcontrat, idpaiement):
 
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Contrat modifié avec succès')
         return redirect(url_for('page_paiements', id = idcontrat))

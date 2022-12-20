@@ -10,11 +10,6 @@ import jwt
 from dotenv import load_dotenv
 import os
 
-#if 'DYNO' in os.environ:
-#    print ('loading wkhtmltopdf path on heroku')
-#    MYDIR = os.path.dirname(__file__)    
-#    WKHTMLTOPDF_CMD = os.path.join(MYDIR + "/vendor/wkhtmltox/lib/", "libwkhtmltox.so")
-
 # loads the environment variable file
 load_dotenv()
 
@@ -36,7 +31,7 @@ DB_USER = "postgres_user" #get_env_variable("POSTGRES_DB_USER")
 DB_PASS = "iKXtSSMu6hxGBDyNyA0BGuJQpnAftFK4" #get_env_variable("POSTGRES_DB_PASS")
 DB_PORT = "5432"#get_env_variable("POSTGRES_DB_PORT")
  
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)
+#conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)
 
 
 @app.route("/")

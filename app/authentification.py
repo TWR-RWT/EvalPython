@@ -1,5 +1,5 @@
 #! C:\Users\tgp\AppData\Local\Programs\Python\Python310\python.exe
-from app import app, conn, request, render_template, flash, redirect, url_for, psycopg2
+from app import app, DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_PORT, request, render_template, flash, redirect, url_for, psycopg2
 import sys
 from flask import Response, jsonify, make_response, session, Flask
 import jwt
@@ -33,6 +33,7 @@ def login():
 
         username = request.form['username']
         password = request.form['password']
+        conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         try:#
             cur.execute("""
@@ -42,7 +43,7 @@ def login():
             user = cur.fetchone()
             conn.commit()
             cur.close()#
-            #conn.close()#
+            conn.close()#
             if check_password_hash(user['password'], password):
                 token = jwt.encode({'user': user['username'], 'exp': datetime.utcnow() + timedelta(hours=24)}, app.config['SECRET_KEY'])
                 session['username'] = username
@@ -75,6 +76,7 @@ def create_user():
 #    data = request.get_json()
     
     if request.method == 'POST':
+        conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)#
         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
         username = request.form['username']
         hashed_password = generate_password_hash(request.form['password'], method='sha256')
@@ -82,7 +84,7 @@ def create_user():
         cur.execute("INSERT INTO immo.accounts (username, password) VALUES (%s, %s)", (username, hashed_password))
         conn.commit()
         cur.close()#
-        #conn.close()#
+        conn.close()#
         flash('Compte créée avec succès')
         return redirect(url_for('users'))
 
