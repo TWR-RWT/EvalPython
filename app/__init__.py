@@ -25,11 +25,11 @@ app = Flask(__name__)
 
 app.secret_key = "very-secret-key"
 
-DB_HOST = "dpg-ceevc3h4reb3r0p0mlng-a.frankfurt-postgres.render.com" #get_env_variable("POSTGRES_DB_HOST")
-DB_NAME = "mydb_3gut" #get_env_variable("POSTGRES_DB_NAME")
-DB_USER = "postgres_user" #get_env_variable("POSTGRES_DB_USER")
-DB_PASS = "iKXtSSMu6hxGBDyNyA0BGuJQpnAftFK4" #get_env_variable("POSTGRES_DB_PASS")
-DB_PORT = "5432"#get_env_variable("POSTGRES_DB_PORT")
+DB_HOST = get_env_variable("POSTGRES_DB_HOST")
+DB_NAME = get_env_variable("POSTGRES_DB_NAME")
+DB_USER = get_env_variable("POSTGRES_DB_USER")
+DB_PASS = get_env_variable("POSTGRES_DB_PASS")
+DB_PORT = get_env_variable("POSTGRES_DB_PORT")
  
 #conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST, port=DB_PORT)
 
